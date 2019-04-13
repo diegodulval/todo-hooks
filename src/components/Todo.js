@@ -1,22 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Todo.css";
-
-function Task({ task, index, updateTask, removeTask }) {
-  return (
-    <div
-      className="task"
-      style={{ textDecoration: task.completed ? "line-through" : "" }}
-    >
-      {task.title}
-      <button style={{ background: "red" }} onClick={() => removeTask(index)}>
-        x
-      </button>
-      <button onClick={() => updateTask(index)}>
-        {!task.completed ? "Complete" : "Todo"}
-      </button>
-    </div>
-  );
-}
+import Task from "./Task";
+import CreateTask from "./CreateTask";
 
 function Todo() {
   const [tasksRemaining, setTasksRemaining] = useState(0);
@@ -74,30 +59,6 @@ function Todo() {
         <CreateTask addTask={addTask} />
       </div>
     </div>
-  );
-}
-
-function CreateTask({ addTask }) {
-  const [value, setValue] = useState("");
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (!value) return;
-
-    addTask(value);
-    setValue("");
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        className="input"
-        value={value}
-        placeholder="Add a new task"
-        onChange={e => setValue(e.target.value)}
-      />
-    </form>
   );
 }
 

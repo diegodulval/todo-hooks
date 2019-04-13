@@ -13,7 +13,7 @@ function Task({ task }) {
 }
 
 function Todo() {
-  const [tasks, setTask] = useState([
+  const [tasks, setTasks] = useState([
     {
       title: "Grab some Pizza",
       completed: true
@@ -27,6 +27,12 @@ function Todo() {
       completed: false
     }
   ]);
+
+  const addTask = title => {
+    const newTasks = [...tasks, { title, completed: false }];
+    setTasks(newTasks);
+  };
+
   return (
     <div className="todo-container">
       <div className="header">Todo - Items</div>
@@ -35,7 +41,34 @@ function Todo() {
           <Task task={task} index={index} key={index} />
         ))}
       </div>
+      <div className="create-task">
+        <CreateTask addTask={addTask} />
+      </div>
     </div>
+  );
+}
+
+function CreateTask({ addTask }) {
+  const [value, setValue] = useState("");
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!value) return;
+
+    addTask(value);
+    setValue("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        className="input"
+        value={value}
+        placeholder="Add a new task"
+        onChange={e => setValue(e.target.value)}
+      />
+    </form>
   );
 }
 
